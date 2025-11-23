@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin - GymTrack{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="admin-body">
+    {% if session.admin_id %}
+    <nav class="admin-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="{{ url_for('admin.dashboard') }}">🏋️ GymTrack Admin</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('admin.members') }}">Members</a></li>
+                <li><a href="{{ url_for('admin.attendance') }}">Attendance</a></li>
+                <li><a href="{{ url_for('admin.notifications') }}">Notifications</a></li>
+                <li><a href="{{ url_for('admin.logout') }}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    {% endif %}
+    
+    <div class="admin-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+
+

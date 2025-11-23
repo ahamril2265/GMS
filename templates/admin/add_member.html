@@ -1,0 +1,133 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Add Member - GymTrack Admin{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Add New Member</h1>
+    <a href="{{ url_for('admin.members') }}" class="btn btn-secondary">Back to Members</a>
+</div>
+
+<div class="card">
+    <form method="POST" action="{{ url_for('admin.add_member') }}" class="member-form">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="admission_number">Admission Number</label>
+                <input 
+                    type="text" 
+                    id="admission_number" 
+                    name="admission_number" 
+                    value="{{ auto_admission if auto_admission else '' }}"
+                    placeholder="Auto-generated or enter manually"
+                >
+                <small class="form-text">Leave empty to auto-generate, or enter manually</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    required
+                    placeholder="Enter full name"
+                >
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required
+                    placeholder="member@example.com"
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="mobile_number">Mobile Number</label>
+                <input 
+                    type="tel" 
+                    id="mobile_number" 
+                    name="mobile_number" 
+                    placeholder="+1234567890"
+                >
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="date_of_birth">Date of Birth</label>
+                <input 
+                    type="date" 
+                    id="date_of_birth" 
+                    name="date_of_birth"
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="sex">Sex</label>
+                <select id="sex" name="sex">
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="plan_type">Plan Type *</label>
+                <select id="plan_type" name="plan_type" required>
+                    <option value="">Select Plan</option>
+                    <option value="1 Day Pass">1 Day Pass</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="3 Months">3 Months</option>
+                    <option value="6 Months">6 Months</option>
+                    <option value="12 Months">12 Months</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="access_type">Access Type *</label>
+                <select id="access_type" name="access_type" required>
+                    <option value="One-time">One-time</option>
+                    <option value="Multiple">Multiple</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="start_date">Start Date *</label>
+                <input 
+                    type="date" 
+                    id="start_date" 
+                    name="start_date" 
+                    required
+                >
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="toggle-label">
+                <input 
+                    type="checkbox" 
+                    id="email_notifications" 
+                    name="email_notifications" 
+                    checked
+                >
+                <span>Enable email notifications for check-in/out</span>
+            </label>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Add Member</button>
+            <a href="{{ url_for('admin.members') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

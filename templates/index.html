@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}GymTrack - Check In/Out{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="header">
+        <h1>🏋️ GymTrack</h1>
+        <p class="subtitle">Attendance Management System</p>
+    </div>
+    
+    <div class="main-content">
+        <div class="card">
+            <h2>Member Check-In/Out</h2>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="messages">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <form method="POST" action="{{ url_for('main.check_member') }}" class="check-form">
+                <div class="form-group">
+                    <label for="admission_number">Admission Number</label>
+                    <input 
+                        type="text" 
+                        id="admission_number" 
+                        name="admission_number" 
+                        placeholder="Enter your admission number"
+                        required
+                        autofocus
+                        autocomplete="off"
+                    >
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Check In/Out</button>
+            </form>
+            
+            <div class="info-box">
+                <h3>How it works:</h3>
+                <ul>
+                    <li>Enter your admission number to check in or check out</li>
+                    <li>The system automatically determines your action based on your current status</li>
+                    <li>You'll receive an email confirmation for each action</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="admin-link">
+            <a href="{{ url_for('admin.login') }}" class="link">Admin Portal →</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 GymTrack. All rights reserved.</p>
+    </footer>
+</div>
+{% endblock %}
+
+

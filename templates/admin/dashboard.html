@@ -1,0 +1,63 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Dashboard - GymTrack Admin{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <h1>Dashboard</h1>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-info">
+                <h3>{{ stats.total_members }}</h3>
+                <p>Total Members</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+                <h3>{{ stats.active_members }}</h3>
+                <p>Active Members</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">📅</div>
+            <div class="stat-info">
+                <h3>{{ stats.today_attendance }}</h3>
+                <p>Today's Attendance</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">🔔</div>
+            <div class="stat-info">
+                <h3>{{ stats.recent_notifications }}</h3>
+                <p>Recent Notifications</p>
+            </div>
+        </div>
+        
+        {% if stats.today_birthdays > 0 %}
+        <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+            <div class="stat-icon">🎉</div>
+            <div class="stat-info">
+                <h3>{{ stats.today_birthdays }}</h3>
+                <p>Birthdays Today</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="action-buttons">
+            <a href="{{ url_for('admin.add_member') }}" class="btn btn-primary">Add New Member</a>
+            <a href="{{ url_for('admin.attendance') }}" class="btn btn-secondary">View Attendance</a>
+            <a href="{{ url_for('admin.notifications') }}" class="btn btn-secondary">View Notifications</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,67 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Notifications - GymTrack Admin{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Notifications</h1>
+</div>
+
+<div class="card">
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Member</th>
+                    <th>Admission Number</th>
+                    <th>Message</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if notifications %}
+                    {% for notification in notifications %}
+                    <tr>
+                        <td>
+                            {% if notification.type == 'birthday' %}
+                                <span class="badge" style="background: #e74c3c; color: white;">🎉 Birthday</span>
+                            {% else %}
+                                <span class="badge badge-warning">{{ notification.type }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ notification.member_name or 'N/A' }}</td>
+                        <td>{{ notification.admission_number or 'N/A' }}</td>
+                        <td>{{ notification.message }}</td>
+                        <td>
+                            {% if notification.created_at %}
+                                {{ notification.created_at.strftime('%Y-%m-%d %H:%M:%S') if notification.created_at else 'Today' }}
+                            {% else %}
+                                Today
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if notification.id %}
+                                <form method="POST" action="{{ url_for('admin.delete_notification', notification_id=notification.id) }}" 
+                                      onsubmit="return confirm('Delete this notification?');" 
+                                      style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            {% else %}
+                                <span style="color: #7f8c8d;">-</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">No notifications</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+

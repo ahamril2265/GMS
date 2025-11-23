@@ -1,0 +1,65 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Attendance - GymTrack Admin{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Attendance Records</h1>
+    <a href="{{ url_for('admin.export_attendance', date=date_filter, member=member_search) }}" class="btn btn-primary">Export CSV</a>
+</div>
+
+<div class="card">
+    <div class="filters">
+        <form method="GET" action="{{ url_for('admin.attendance') }}" class="filter-form">
+            <input 
+                type="date" 
+                name="date" 
+                value="{{ date_filter }}"
+                class="date-input"
+            >
+            <input 
+                type="text" 
+                name="member" 
+                placeholder="Search by member name or admission number..."
+                value="{{ member_search }}"
+                class="search-input"
+            >
+            <button type="submit" class="btn btn-secondary">Filter</button>
+            <a href="{{ url_for('admin.attendance') }}" class="btn btn-outline">Clear</a>
+        </form>
+    </div>
+    
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Member Name</th>
+                    <th>Admission Number</th>
+                    <th>Check-In</th>
+                    <th>Check-Out</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if attendance %}
+                    {% for record in attendance %}
+                    <tr>
+                        <td>{{ record.date }}</td>
+                        <td>{{ record.member_name }}</td>
+                        <td>{{ record.admission_number }}</td>
+                        <td>{{ record.check_in.strftime('%Y-%m-%d %H:%M:%S') if record.check_in else '-' }}</td>
+                        <td>{{ record.check_out.strftime('%Y-%m-%d %H:%M:%S') if record.check_out else '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center">No attendance records found</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+
